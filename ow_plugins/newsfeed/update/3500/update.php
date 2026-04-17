@@ -92,8 +92,9 @@ $dist->createTable('cron_command', "CREATE TABLE IF NOT EXISTS `%cron_command%` 
 $dist->addTable('follow');
 $dist->query("ALTER TABLE `%follow%` ADD `permission` VARCHAR( 255 ) NOT NULL DEFAULT 'everybody'");
 
-$r = $source->mysqlQuery("SELECT * FROM `%action%`");
-while ( $sAction = mysql_fetch_assoc($r) )
+$rows = $source->mysqlQuery("SELECT * FROM `%action%`");
+// PHP 7.0+: mysql_fetch_assoc() removed; mysqlQuery() now returns an array of rows
+foreach ( $rows as $sAction )
 {
     $dActionId = $dist->insertRow('action', array(
         'entityType' => $sAction['entityType'],

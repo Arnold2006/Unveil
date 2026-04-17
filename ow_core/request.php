@@ -45,7 +45,8 @@ class OW_Request
      */
     private function __construct()
     {
-        if ( get_magic_quotes_gpc() )
+        // PHP 8.0+: get_magic_quotes_gpc() was removed; magic_quotes_gpc is always off in PHP 8+
+        if ( function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() )
         {
             $_GET = $this->stripSlashesRecursive($_GET);
             $_POST = $this->stripSlashesRecursive($_POST);

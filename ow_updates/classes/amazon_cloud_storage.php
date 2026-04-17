@@ -188,12 +188,13 @@ class UPDATE_AmazonCloudStorage implements OW_Storage
 
                     if ( !isset($file['name']) )
                     {
-                        continue;
+                        // PHP 7.3+: `continue` inside switch targets switch, not foreach; use `continue 2` to skip to next foreach iteration
+                        continue 2;
                     }
 
                     if( is_array($fileTypes) && !in_array(UTIL_File::getExtension($file['name']), $fileTypes) )
                     {
-                        continue;
+                        continue 2;
                     }
 
                 case isset($file['name']) :
@@ -202,7 +203,7 @@ class UPDATE_AmazonCloudStorage implements OW_Storage
 
                     if( isset($matches[1]) &&  trim($matches[1]) === self::CLOUD_FOLDER_NAME )
                     {
-                        continue;
+                        continue 2;
                     }
 
                     $result[] = $this->getLocalFSPath($file['name']);

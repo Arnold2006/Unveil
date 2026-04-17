@@ -1441,7 +1441,7 @@ final class BOL_UserService
             {
                 $loginCookie = $this->saveLoginCookie(OW::getUser()->getId());
 
-                setcookie('ow_login', $loginCookie->getCookie(), (time() + 86400 * 7), '/', null, null, true);
+                setcookie('ow_login', $loginCookie->getCookie(), (time() + 86400 * 7), '/', '', '', true);
             }
         }
 

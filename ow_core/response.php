@@ -132,7 +132,8 @@ class OW_Response
                 }
                 else if ( mb_strtolower($headerName) === 'status' )
                 {
-                    header(ucfirst(mb_strtolower($headerName)) . ': ' . $headerValue, null, (int) $headerValue);
+                    // PHP 8.1+: passing null for bool $replace deprecated; use explicit true
+                    header(ucfirst(mb_strtolower($headerName)) . ': ' . $headerValue, true, (int) $headerValue);
                 }
                 else
                 {

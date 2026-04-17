@@ -150,14 +150,8 @@ class NEWSFEED_TableList
 
     public function mysqlQuery($query)
     {
-        static $mysqlNativeQuery = null;
-        if ( $mysqlNativeQuery === null )
-        {
-            $mysqlNativeQuery = mysql_connect(OW_DB_HOST, OW_DB_USER, OW_DB_PASSWORD );
-            mysql_select_db(OW_DB_NAME, $mysqlNativeQuery);
-        }
-
-        return mysql_query($this->prepareQuery($query), $mysqlNativeQuery);
+        // PHP 7.0+: mysql_* extension removed; use queryForList via OW_Database (PDO-backed)
+        return $this->dbo->queryForList($this->prepareQuery($query));
     }
 }
 
