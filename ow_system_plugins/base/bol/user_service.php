@@ -1441,7 +1441,8 @@ final class BOL_UserService
             {
                 $loginCookie = $this->saveLoginCookie(OW::getUser()->getId());
 
-                setcookie('ow_login', $loginCookie->getCookie(), (time() + 86400 * 7), '/', null, null, true);
+                // PHP 8.1+: null for string/bool params deprecated; use '' for domain and false for secure
+                setcookie('ow_login', $loginCookie->getCookie(), (time() + 86400 * 7), '/', '', false, true);
             }
         }
 
