@@ -1441,10 +1441,10 @@ class NEWSFEED_CLASS_EventHandler
         }
 
         $actionData = json_decode($action->data, true);
-        // PHP 8.0+: unparenthesized nested ternary is a fatal error; add explicit parentheses
+        // PHP 8.0+: unparenthesized nested ternary is a fatal error; simplify since inner condition is always false in else-branch
         $status = empty($actionData['data']['status'])
             ? $actionData['string']
-            : (empty($actionData['data']['status']) ? null : $actionData['data']['status']);
+            : $actionData['data']['status'];
         
         $contentImage = empty($actionData['contentImage']) ? null : $actionData['contentImage'];
 
