@@ -590,14 +590,14 @@ class INSTALL_CTRL_Install extends INSTALL_ActionController
             $lineNo++;
 
             if ( !strlen(($line = trim($line)))
-                || $line{0} == '#' || $line{0} == '-'
+                || $line[0] == '#' || $line[0] == '-'
                 || preg_match('~^/\*\!.+\*/;$~siu', $line) ) {
                 continue;
             }
 
             $query .= $line;
 
-            if ( $line{strlen($line)-1} != ';' ) {
+            if ( $line[strlen($line)-1] != ';' ) {
                 continue;
             }
 

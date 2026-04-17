@@ -449,11 +449,11 @@ function saveExeIcon($filename,$icoFileNameOrPath="",$iconIndex=-1) /*-1 for all
       jpexs_readResDirectoryEntry($R,$PhysicalOffset[$p]);
       $IconCount=null;
       $Ikona=null;
-      while (list ($key, $val) = each ($R["Subdir"])):
+      foreach ($R["Subdir"] as $key => $val):
         if($key==14):
           $r=0;
-          while (list ($key2, $val2) = each ($R["Subdir"][$key]["Subdir"])):
-             while (list ($key3, $val3) = each ($R["Subdir"][$key]["Subdir"][$key2]["Subdir"])):
+          foreach ($R["Subdir"][$key]["Subdir"] as $key2 => $val2):
+             foreach ($R["Subdir"][$key]["Subdir"][$key2]["Subdir"] as $key3 => $val3):
                fseek($jpexs_f,$val3["DataOffset"]);
                $Reserved=jpexs_freadword($jpexs_f);
                $Type=jpexs_freadword($jpexs_f);
@@ -471,30 +471,28 @@ function saveExeIcon($filename,$icoFileNameOrPath="",$iconIndex=-1) /*-1 for all
                 };
                fseek($jpexs_f,$val3["DataOffset"]);
                $r++;
-             endwhile;
-          endwhile;
+             endforeach;
+          endforeach;
         endif;
-      endwhile;
+      endforeach;
 
-      reset ($R["Subdir"]);
-
-      while (list ($key, $val) = each ($R["Subdir"])):
+      foreach ($R["Subdir"] as $key => $val):
         if($key==3):
-          while (list ($key2, $val2) = each ($R["Subdir"][$key]["Subdir"])):
+          foreach ($R["Subdir"][$key]["Subdir"] as $key2 => $val2):
           for($r=0;$r<count($Ikona);$r++):
            for($s=0;$s<count($Ikona[$r]);$s++):
-             while (list ($key3, $val3) = each ($R["Subdir"][$key]["Subdir"][$Ikona[$r][$s]["IconId"]]["Subdir"])):
+             foreach ($R["Subdir"][$key]["Subdir"][$Ikona[$r][$s]["IconId"]]["Subdir"] as $key3 => $val3):
                if(($iconIndex==$r)or($iconIndex==-1)or((is_array($iconIndex))and(in_array($r,$iconIndex)))):
                  fseek($jpexs_f,$val3["DataOffset"]);
                  $Ikona[$r][$s]["Data"]=fread($jpexs_f,$val3["DataSize"]);
                  $Ikona[$r][$s]["DataSize"]=$val3["DataSize"];
                endif;
-             endwhile;
+             endforeach;
            endfor;
            endfor;
-          endwhile;
+          endforeach;
         endif;
-      endwhile;
+      endforeach;
       $ok=false;
       for($r=0;$r<count($Ikona);$r++):
         if(($iconIndex==$r)or($iconIndex==-1)or((is_array($iconIndex))and(in_array($r,$iconIndex)))):
